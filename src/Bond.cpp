@@ -182,7 +182,25 @@ double Bond::calcPVOfCpn(double period, double totalPeriods)
 
 }
 
-double Bond::Convexity()
+double Bond::Convexity(double mktPrice)
 {
+    double periods = numPeriods * frequency;
+    double sumOfConvex = 0;
 
+    // discounts the coupon payments
+    for(int i = 1; i <= periods; i++)
+    {
+        double PVCpn = calcPVOfCpn(i, periods);
+        double factorYears = i + (i * i);
+
+        // multiplies the discounted coupon by the factor years
+        sumOfConvex += PVCpn * factorYears;
+    }
+
+    // calculates the parts of the convexity formula
+    double num = sumOfConvex / std::pow((1 + yieldToMaturity), 2);
+    double denom = mktPrice * std::pow((frequency), 2);
+
+    // calculate the actual convexity of the bond
+    return num / denom;
 }

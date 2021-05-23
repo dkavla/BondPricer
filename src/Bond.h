@@ -45,7 +45,7 @@ public:
     double calcCurrentYield(double cpn, double YTM);
     double MacaulayDur(double marketPrice);
     double ModifiedDur(double marketPrice);
-    double Convexity();
+    double Convexity(double mktPrice);
 
     // Helper Methods
     double calcPVOfCpn(double period, double totalPeriods);
