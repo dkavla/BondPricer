@@ -1,6 +1,4 @@
-//
-// Created by Dawid Kowalczyk on 5/20/21.
-//
+
 
 #include "Bond.h"
 #include <cmath>
@@ -138,6 +136,17 @@ double Bond::calcYTM()
     return yieldToMaturity;
 }
 
+double Bond::calcCurrentYield()
+{
+    return couponPayment / price;
+}
+
+// requires user input
+double Bond::calcCurrentYield(double cpn, double YTM)
+{
+    return cpn / (YTM / 100);
+}
+
 double Bond::MacaulayDur(double marketPrice)
 {
     double periods = numPeriods * frequency;
@@ -170,5 +179,10 @@ double Bond::calcPVOfCpn(double period, double totalPeriods)
     }
 
     return (couponPayment / frequency) * PVFactor;
+
+}
+
+double Bond::Convexity()
+{
 
 }

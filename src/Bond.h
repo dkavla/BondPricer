@@ -1,6 +1,3 @@
-//
-// Created by Dawid Kowalczyk on 5/20/21.
-//
 
 #ifndef BONDPRICER_BOND_H
 #define BONDPRICER_BOND_H
@@ -44,10 +41,13 @@ public:
     double cpnBondPrice();
     double zeroCpnBondPrice();
     double calcYTM();
-    //double calcCurrentYield();
+    double calcCurrentYield();
+    double calcCurrentYield(double cpn, double YTM);
     double MacaulayDur(double marketPrice);
     double ModifiedDur(double marketPrice);
-    //double Convexity();
+    double Convexity();
+
+    // Helper Methods
     double calcPVOfCpn(double period, double totalPeriods);
 };
 
