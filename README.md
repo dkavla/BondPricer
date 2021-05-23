@@ -10,7 +10,7 @@ Duration measures the bond's sensitivity due to changes in interest rates.
 
 Each bond in this program is represented as an object of the class Bond that will be defined in a seperate header file within the project files (will be specified)
 
-## Things That Are Be Bound To Change
+## Things That Are Bound To Change
 * The first version of the program will store the bond info and calculations in a file, but plans to make the program store the info inside a database.
 
 ## Formulas Being Used
