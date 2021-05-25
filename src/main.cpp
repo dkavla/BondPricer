@@ -1,22 +1,187 @@
 #include <iostream>
-#include <iomanip>
 #include "Bond.h"
+#include <fstream>
+#include <vector>
+
+using std::ifstream;
+using std::ofstream;
+
+
+void outputMenu();
+Bond inputBondInfo();
+void evaluateOption(Bond &b, char option);
 
 int main() {
 
-    std::cout.precision(3);
+    std::vector<Bond> bonds;
+    char choice;
 
-    Bond bond(1000.0, 6.25, 5.0, 6.79, 2);
+    Bond bond;
 
-    std::cout << "=========================\n";
-    std::cout << "Bond Face Value: " << bond.getFV() << "\n";
-    std::cout << "Bond Annual Yield to Maturity: " << bond.getYTM() * 100 << "%\n";
-    std::cout << "Periods Until Maturity: " << (int)bond.getPeriods() << "\n";
-    std::cout << "Bond Calculated Price: " << bond.calcBondPrice() << "\n";
-    std::cout << "Macaulay Duration: " << bond.MacaulayDur(bond.calcBondPrice()) << "\n";
-    std::cout << "Modified Duration: " << bond.ModifiedDur(bond.calcBondPrice()) << "\n";
-    std::cout << "Convexity of Bond: " << bond.Convexity(bond.calcBondPrice()) << "\n";
-    std::cout << "=========================\n";
+    while(true)
+    {
+        std::cout << "Bond Pricing Program:\n";
+        outputMenu();
+        std::cout << "Choose menu option(q to quit): ";
+        std::cin >> choice;
+
+        if(choice == 'q')
+        {
+            std::cout << "Quitting Pricer\n";
+            break;
+        }
+
+        if(choice == '1')
+        {
+            bond = inputBondInfo();
+            bonds.push_back(bond);
+        }
+
+        if(choice == '2')
+        {
+            bond.outputBond();
+        }
+
+        if(choice == '3')
+        {
+            char option;
+            while(true)
+            {
+                std::cout << "\tWhat would you like to edit:\n";
+                std::cout << "\t1.) Yield to Maturity\n";
+                std::cout << "\t2.) Face Value\n";
+                std::cout << "\t3.) Coupon Rate\n";
+                std::cout << "\t4.) Years to Maturity\n";
+                std::cout << "\t5.) Frequency of Coupon Payments\n";
+                std::cout << "\t(Enter q to quit the Edit menu)\n";
+                std::cout << "\t> ";
+                std::cin >> option;
+
+                if(option == 'q')
+                {
+                    break;
+                }
+
+                evaluateOption(bond, option);
+                bond.outputBond();
+            }
+        }
+
+        if(choice == '4')
+        {
+            double macDur = bond.MacaulayDur(bond.calcBondPrice());
+            std::cout << "\n";
+            std::cout << "The bond has a Macaulay Duration of " << macDur << "\n";
+            std::cout << "\n";
+        }
+
+        if(choice == '5')
+        {
+            double modDur = bond.ModifiedDur(bond.calcBondPrice());
+            std::cout << "\n";
+            std::cout << "The bond has a Modified Duration of " << modDur << "\n";
+            std::cout << "\n";
+        }
+
+        if(choice == '6')
+        {
+            double convex = bond.Convexity(bond.calcBondPrice());
+            std::cout << "\n";
+            std::cout << "The bond has a Convexity of " << convex << "\n";
+            std::cout << "\n";
+        }
+    }
+
+    std::cout << "Terminating program...\n";
 
     return 0;
 }
+
+void outputMenu()
+{
+    std::cout << "1.) Input Bond Info\n";
+    std::cout << "2.) Print Bond Info\n";
+    std::cout << "3.) Edit Bond Info\n";
+    std::cout << "4.) Calculate Macaulay Duration\n";
+    std::cout << "5.) Calculate Modified Duration\n";
+    std::cout << "6.) Calculate Bond Convexity\n";
+}
+
+Bond inputBondInfo()
+{
+    double FV;
+    double cpnRate;
+    double years;
+    double frequency;
+    double yield;
+
+
+    std::cout << "Enter the bond's face value: ";
+    std::cin >> FV;
+    std::cout << "\n";
+
+    std::cout << "Enter the coupon rate (as a %): ";
+    std::cin >> cpnRate;
+    std::cout << "\n";
+
+    std::cout << "Enter the years until maturity: ";
+    std::cin >> years;
+    std::cout << "\n";
+
+    std::cout << "Enter the Yield to Maturity of the bond (as %): ";
+    std::cin >> yield;
+    std::cout << "\n";
+
+    std::cout << "Enter the frequency of coupon payments(1, 2, 4, or 12 allowed only): ";
+    std::cin >> frequency;
+    std::cout << "\n";
+
+    Bond bond(FV, cpnRate, years, yield, frequency);
+
+    return bond;
+}
+
+void evaluateOption(Bond &b, char option)
+{
+    switch(option)
+    {
+        case '1':
+            double yield;
+            std::cout << "Enter the new yield to maturity: ";
+            std::cin >> yield;
+            b.setYTM(yield);
+            break;
+        case '2':
+            double fv;
+            std::cout << "Enter the new face value: ";
+            std::cin >> fv;
+            b.setFV(fv);
+            break;
+        case'3':
+            double cpn;
+            std::cout << "Enter the new coupon rate: ";
+            std::cin >> cpn;
+            b.setCoupon(cpn, b.getFV());
+            break;
+        case '4':
+            double years;
+            std::cout << "Enter the years until maturity: ";
+            std::cin >> years;
+            b.setNumPeriods(years);
+            break;
+        case '5':
+            double freq;
+            std::cout << "Enter the frequency of payments: ";
+            std::cin >> freq;
+            b.setFrequency(freq);
+            break;
+    }
+}
+
+
+
+
+
+
+
+
