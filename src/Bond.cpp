@@ -83,10 +83,12 @@ int Bond::getFrequency()
 /* Methods */
 double Bond::calcBondPrice()
 {
+    // check if the bond is zero coupon bond
     if(couponPayment == 0){
         return zeroCpnBondPrice();
     }
 
+    // if not return the price of the coupon bond
     return cpnBondPrice();
 }
 
@@ -204,3 +206,24 @@ double Bond::Convexity(double mktPrice)
     // calculate the actual convexity of the bond
     return num / denom;
 }
+
+void Bond::outputBond()
+{
+    std::cout << "==============================================\n";
+    std::cout << "Price: " << calcBondPrice() << "\n";
+    std::cout << "Face Value: " << faceValue << "\n";
+    std::cout << "Coupon Rate: " << (couponPayment / faceValue) * 100 << "%\n";
+    std::cout << "Years to Maturity: " << numPeriods << "\n";
+    std::cout << "Frequency of Coupons: " << frequency << "\n";
+    std::cout << "Yield to Maturity: " << yieldToMaturity * 100 << "%\n";
+    std::cout << "Macaulay Duration: " << MacaulayDur(calcBondPrice()) << "\n";
+    std::cout << "Modified Duration: " << ModifiedDur(calcBondPrice()) << "\n";
+    std::cout << "Convexity: " << MacaulayDur(calcBondPrice()) << "\n";
+    std::cout << "==============================================\n";
+}
+
+
+
+
+
+

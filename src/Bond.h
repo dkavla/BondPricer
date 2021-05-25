@@ -49,6 +49,9 @@ public:
 
     // Helper Methods
     double calcPVOfCpn(double period, double totalPeriods);
+
+    // Output Bond
+    void outputBond();
 };
 
 
