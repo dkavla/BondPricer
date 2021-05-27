@@ -1,10 +1,6 @@
 #include <iostream>
 #include "Bond.h"
-#include <fstream>
 #include <vector>
-
-using std::ifstream;
-using std::ofstream;
 
 
 void outputMenu();
@@ -124,7 +120,7 @@ Bond inputBondInfo()
     std::cin >> cpnRate;
     std::cout << "\n";
 
-    std::cout << "Enter the years until maturity: ";
+    std::cout << "Enter the years until maturity (if months enter the number of month divide by 12): ";
     std::cin >> years;
     std::cout << "\n";
 
