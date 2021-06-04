@@ -5,7 +5,7 @@
 
 void outputMenu();
 Bond inputBondInfo();
-void evaluateOption(Bond &b, char option);
+void evaluateChoice(Bond &b, char choice);
 
 int main() {
 
@@ -58,7 +58,7 @@ int main() {
                     break;
                 }
 
-                evaluateOption(bond, option);
+                evaluateChoice(bond, option);
                 bond.outputBond();
             }
         }
@@ -137,9 +137,9 @@ Bond inputBondInfo()
     return bond;
 }
 
-void evaluateOption(Bond &b, char option)
+void evaluateChoice(Bond &b, char choice)
 {
-    switch(option)
+    switch(choice)
     {
         case '1':
             double yield;
